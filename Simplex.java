@@ -1,14 +1,15 @@
 import java.util.Scanner;
 public class Simples{
     //Atributos 
-    private double [][] tabla; //Tabla simples
-    private int numVariables; //Numero de variables 
+
+    private double [] tabla; //Tabla simples
+    private int numVariables; //Numero de variables
     private int numRestricciones; //Numero de restricciones
-    private int numVariablesTotales; //Variables mas los de holgura
+    private int numVariablesTotales; // Variables mas los de holgura 
     private boolean esMaximizacion;
-    private int variablesBasicas; 
+    private int variablesBasicas;
     private String [] nombresVariables;
-    public static void main(String []args){
+    public static void main(String [] args){
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("=== MÉTODO SIMPLEX ===");// Titulo
@@ -25,11 +26,11 @@ public class Simples{
         simplex.close();
     }
     public Simplex(int numVariables, int numRestricciones, boolean esMaximizacion){
-        this.numVariables = numVariables;
-        this.numRestricciones = numRestricciones;
+        this.numVariables = NumVariables;
+        this.numRestriciones = numRestricciones;
         this.esMaximizacion = esMaximizacion;
-        this.numVariablesTotales = numVariables + numRestricciones; 
-        this.variablesBasicas = new int[numRestricciones];
+        this.numVariablesTotales = numVariables + numRestricciones;
+        this.variablesBasicas = new [numRestricciones];
         this.nombresVariables = new String[numVariablesTotales];
         //Iniciar nombre de variables
         for(int i=0; i<numVariables; i++){
@@ -41,10 +42,10 @@ public class Simples{
         // Inicializar tabla simplex
         tabla = new double[numRestricciones + 1][numVariablesTotales + 1];
     }
-    //se crea el metodo para ingresar los datos
-    public void ingresaDatos(Scanner sacnner){
-        System.out.println("\n=== INGRESO DE LA FUNCIÓN OBJETIVO ===");
-        System.out.println("Ingrese los coeficientes de la función objetivo:");
+    // se crea el metodo para ingresar los datos
+    public void ingresaDatos(Scanner Scanner){
+        System.out.prontln("\n===INGRESO DE LA FUNCION OBGETIVO===");
+        System.out.println("Ingrese los coeficientes de la duncion objetivo:");
         // Ingresar coeficientes de la función objetivo para variables de decisión
         for (int j = 0; j < numVariables; j++) {
             System.out.printf("Coeficiente de x%d: ", j + 1);
@@ -67,14 +68,14 @@ public class Simples{
                 System.out.printf("Coeficiente de x%d: ", j + 1);
                 tabla[i][j] = scanner.nextDouble();
             }
-            // Coeficientes de las variables de holgura
-            for (int j = numVariables; j < numVariablesTotales; j++) {
-                tabla[i][j] = (j == numVariables + i) ? 1.0 : 0.0;
+            //Coeficientes de las variables de holgura
+            for (int j = numVariables; j < numVariablesTotales; j++){
+                tabla[i][j] = (j == numVariables + i) ? 1.0: 0.0;
             }
-            // Lado derecho (LD)
-            System.out.print("Lado derecho (LD) de la restricción: ");
+            //Lado derecho (LD)
+            System.out.println("Lado derecho (LD) de la restricción:");
             tabla[i][numVariablesTotales] = scanner.nextDouble();
-            variablesBasicas[i] = numVariables + i; // Variable de holgura básica inicial
+            variablesBasicas[i] = numVariables + i; //Variable de holgura básica inicial 
         }
         // Mostrar tabla inicial
         System.out.println("\n=== TABLA INICIAL SIMPLEX ===");
@@ -106,12 +107,12 @@ public class Simples{
         }
         mostrarSolucion();
     }
-    //se verifica si es optimo
+    //Se verifica si es optimo
     private boolean esOptimo(){
-         if (esMaximizacion) {
-            // Maximización: todos los coeficientes en Z deben ser ≥ 0
-            for (int j = 0; j < numVariablesTotales; j++) {
-                if (tabla[numRestricciones][j] < -0.0001) {
+        if (esMaximizacion){
+          //Maximizaci+on: todos los coeficientes en z deben ser ≥ 0
+            for(int j = 0; j < numVariablesTotales; j++){
+                if (tabla[numRestricciones][j] < -0.0001){
                     return false;
                 }
             }
@@ -125,14 +126,14 @@ public class Simples{
         }
         return true;
     }
-    //se encuentra la columna pivote
+    //se encuntra la columna pivote
     private int encontrarColumnaPivote(){
-        if (esMaximizacion) {
-            // Maximización: buscar el valor más negativo en Z
+        if(esMaximizacion){
+            //Maximización: buscar el valor mas negativo en z 
             double minValor = 0;
             int columna = -1;
-            for (int j = 0; j < numVariablesTotales; j++) {
-                if (tabla[numRestricciones][j] < minValor) {
+            for(int j = 0; j < numVariablesTotales; j++){
+                if(tabla[numRestricciones][j] < minValor){
                     minValor = tabla[numRestricciones][j];
                     columna = j;
                 }
@@ -183,19 +184,19 @@ public class Simples{
             }
         }
     }
-    //imprimir la tabla
+    //Imprimir la tabla
     private void imprimirTabla(){
-        // Encabezado
-        System.out.print("\nBase\t");
-        for (int j = 0; j < numVariablesTotales; j++) {
-            System.out.printf("%s\t", nombresVariables[j]);
+        //Encabezado
+        System.out.println("\nBase\t");
+        for(int j = 0; j < numVariablesTotales; j++){
+            System.out.println("%s\t", nombresVariables[j]);
         }
         System.out.println("LD");
-        // Filas de restricciones
-        for (int i = 0; i < numRestricciones; i++) {
-            System.out.printf("%s\t", nombresVariables[variablesBasicas[i]]);
-            for (int j = 0; j <= numVariablesTotales; j++) {
-                System.out.printf("%.4f\t", tabla[i][j]);
+        //Filas de restricciones
+        for(int i = 0; i < numRestriciones; i++){
+            System.out.println("%s\t", nombresVaiables[variablesBasicas[i]]);
+            for(int j = 0; j < = numVariablesTotales; j++){
+                System.out.println("%.4f\t", tabla[i][j]);
             }
             System.out.println();
         }
@@ -230,3 +231,4 @@ public class Simples{
         }
     }
 }
+
